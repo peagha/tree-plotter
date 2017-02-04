@@ -4,7 +4,12 @@ require 'minitest/autorun'
 require_relative 'plotter'
 
 class PloterTest < Minitest::Test
-  Plotable = Struct.new(:label, :children)
+  Plotable = Struct.new(:label, :children) do
+    def initialize(*)
+      super
+      self.children ||= []
+    end
+  end
 
   def test_plot_single_item
     item = Plotable.new('Item label', [])
@@ -13,7 +18,7 @@ class PloterTest < Minitest::Test
   end
 
   def test_plot_single_item_with_single_child
-    child = Struct.new(:label).new('Child label')
+    child = Plotable.new('Child label')
     parent = Plotable.new('Parent label', [child])
 
     plot_result = <<~TREE
@@ -34,6 +39,19 @@ class PloterTest < Minitest::Test
       ├─ Child label 1
       ├─ Child label 2
       └─ Child label 3
+    TREE
+    assert_equal plot_result, Plotter.plot_tree(parent)
+  end
+
+  def test_plot_single_item_with_granchild
+    granchild = Plotable.new('Granchild label')
+    child = Plotable.new('Child label', [granchild])
+    parent = Plotable.new('Parent label', [child])
+
+    plot_result = <<~TREE
+      Parent label
+      └─ Child label
+         └─ Granchild label
     TREE
     assert_equal plot_result, Plotter.plot_tree(parent)
   end

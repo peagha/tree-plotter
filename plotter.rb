@@ -5,17 +5,29 @@ require_relative 'enumerable_refinements'
 module Plotter
   using EnumerableRefinements
 
-  def self.plot_tree(item)
-    new_line = "\n"
+  module_function
 
+  def plot_tree(item)
     str = String.new
-    str << (item.label + new_line)
+    str << plot_item(item.label)
 
-    item.children.each_flag_last do |child, last|
-      prefix = last ? '└─ ' : '├─ '
-      str << (prefix + child.label + new_line)
-    end
+    plot_children(item, str)
 
     str
+  end
+
+  def plot_children(item, str, lvl = 0)
+    item.children.each_flag_last do |child, last|
+      bullet = last ? '└─ ' : '├─ '
+      indentation = '   ' * lvl
+
+      str << plot_item(child.label, bullet, indentation)
+      
+      plot_children(child, str, lvl + 1)
+    end
+  end
+
+  def plot_item(label, bullet = nil, indentation = nil)
+    "#{indentation}#{bullet}#{label}\n"
   end
 end
