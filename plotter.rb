@@ -16,14 +16,16 @@ module Plotter
     str
   end
 
-  def plot_children(item, str, lvl = 0)
+  def plot_children(item, str, lvl = 0, indentation_string = '│  ')
     item.children.each_flag_last do |child, last|
       bullet = last ? '└─ ' : '├─ '
-      indentation = '   ' * lvl
+
+      indentation = indentation_string * lvl
 
       str << plot_item(child.label, bullet, indentation)
-      
-      plot_children(child, str, lvl + 1)
+
+      indentation_string = '   ' if lvl.zero? && last
+      plot_children(child, str, lvl + 1, indentation_string)
     end
   end
 

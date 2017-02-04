@@ -55,4 +55,43 @@ class PloterTest < Minitest::Test
     TREE
     assert_equal plot_result, Plotter.plot_tree(parent)
   end
+
+  def test_plot_single_item_with_multiple_granchild
+    granchild1 = Plotable.new('Granchild label 1')
+    granchild2 = Plotable.new('Granchild label 2')
+    granchild3 = Plotable.new('Granchild label 3')
+    child = Plotable.new('Child label', [granchild1, granchild2, granchild3])
+    parent = Plotable.new('Parent label', [child])
+
+    plot_result = <<~TREE
+      Parent label
+      └─ Child label
+         ├─ Granchild label 1
+         ├─ Granchild label 2
+         └─ Granchild label 3
+    TREE
+    assert_equal plot_result, Plotter.plot_tree(parent)
+  end
+
+  def test_plot_single_item_with_multiple_children_and_granchild
+    granchild1 = Plotable.new('Granchild label 1')
+    granchild2 = Plotable.new('Granchild label 2')
+    granchild3 = Plotable.new('Granchild label 3')
+    child1 = Plotable.new('Child label 1', [granchild1, granchild2, granchild3])
+    child2 = Plotable.new('Child label 2', [granchild1, granchild2, granchild3])
+    parent = Plotable.new('Parent label', [child1, child2])
+
+    plot_result = <<~TREE
+      Parent label
+      ├─ Child label 1
+      │  ├─ Granchild label 1
+      │  ├─ Granchild label 2
+      │  └─ Granchild label 3
+      └─ Child label 2
+         ├─ Granchild label 1
+         ├─ Granchild label 2
+         └─ Granchild label 3
+    TREE
+    assert_equal plot_result, Plotter.plot_tree(parent)
+  end
 end
