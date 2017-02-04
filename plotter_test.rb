@@ -17,7 +17,7 @@ class PloterTest < Minitest::Test
     assert_equal "Item label\n", Plotter.plot_tree(item)
   end
 
-  def test_plot_single_item_with_single_child
+  def test_plot_single_child
     child = Plotable.new('Child label')
     parent = Plotable.new('Parent label', [child])
 
@@ -28,7 +28,7 @@ class PloterTest < Minitest::Test
     assert_equal plot_result, Plotter.plot_tree(parent)
   end
 
-  def test_plot_single_item_with_multiple_child
+  def test_plot_multiple_children
     child1 = Plotable.new('Child label 1')
     child2 = Plotable.new('Child label 2')
     child3 = Plotable.new('Child label 3')
@@ -43,7 +43,7 @@ class PloterTest < Minitest::Test
     assert_equal plot_result, Plotter.plot_tree(parent)
   end
 
-  def test_plot_single_item_with_granchild
+  def test_plot_granchild
     granchild = Plotable.new('Granchild label')
     child = Plotable.new('Child label', [granchild])
     parent = Plotable.new('Parent label', [child])
@@ -56,7 +56,7 @@ class PloterTest < Minitest::Test
     assert_equal plot_result, Plotter.plot_tree(parent)
   end
 
-  def test_plot_single_item_with_multiple_granchild
+  def test_plot_multiple_granchildren
     granchild1 = Plotable.new('Granchild label 1')
     granchild2 = Plotable.new('Granchild label 2')
     granchild3 = Plotable.new('Granchild label 3')
@@ -73,7 +73,7 @@ class PloterTest < Minitest::Test
     assert_equal plot_result, Plotter.plot_tree(parent)
   end
 
-  def test_plot_single_item_with_multiple_children_and_granchild
+  def test_plot_multiple_children_and_granchildren
     granchild1 = Plotable.new('Granchild label 1')
     granchild2 = Plotable.new('Granchild label 2')
     granchild3 = Plotable.new('Granchild label 3')
