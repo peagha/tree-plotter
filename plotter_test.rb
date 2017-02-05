@@ -141,4 +141,17 @@ class PlotterTest < Minitest::Test
     TREE
     assert_equal plot_result, Plotter.plot_tree(tree)
   end
+
+  def test_plot_single_child_with_nil_granchildren
+    tree = {
+      label: 'Parent label',
+      children: [{ label: 'Child label', children: nil }]
+    }
+
+    plot_result = <<~TREE
+      Parent label
+      └─ Child label
+    TREE
+    assert_equal plot_result, Plotter.plot_tree(tree)
+  end
 end

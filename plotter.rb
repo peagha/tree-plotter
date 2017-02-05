@@ -12,7 +12,7 @@ module Plotter
   end
 
   def plot_children(item, tree, level = 0, indentation = '')
-    item[:children].each_flag_last do |child, last|
+    Array(item[:children]).each_flag_last do |child, last|
       bullet = last ? '└─ ' : '├─ '
       tree << plot_item(child[:label], bullet, indentation)
 
