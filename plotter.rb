@@ -6,15 +6,15 @@ module Plotter
   module_function
 
   def plot_tree(item)
-    tree = plot_item(item.label)
+    tree = plot_item(item[:label])
     plot_children(item, tree)
     tree
   end
 
   def plot_children(item, tree, level = 0, indentation = '')
-    item.children.each_flag_last do |child, last|
+    item[:children].each_flag_last do |child, last|
       bullet = last ? '└─ ' : '├─ '
-      tree << plot_item(child.label, bullet, indentation)
+      tree << plot_item(child[:label], bullet, indentation)
 
       children_indentation = indentation + (last ? '   ' : '│  ')
       plot_children(child, tree, level + 1, children_indentation)
