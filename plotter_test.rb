@@ -5,7 +5,7 @@ require_relative 'plotter'
 
 class PlotterTest < Minitest::Test
   def test_plot_single_item
-    item = { label: 'Item label', children: [] }
+    item = { label: 'Item label' }
 
     assert_equal "Item label\n", Plotter.plot_tree(item)
   end
@@ -13,7 +13,7 @@ class PlotterTest < Minitest::Test
   def test_plot_single_child
     tree = {
       label: 'Parent label',
-      children: [{ label: 'Child label', children: [] }]
+      children: [{ label: 'Child label' }]
     }
 
     plot_result = <<~TREE
@@ -27,9 +27,9 @@ class PlotterTest < Minitest::Test
     tree = {
       label: 'Parent label',
       children: [
-        { label: 'Child label 1', children: [] },
-        { label: 'Child label 2', children: [] },
-        { label: 'Child label 3', children: [] }
+        { label: 'Child label 1' },
+        { label: 'Child label 2' },
+        { label: 'Child label 3' }
       ]
     }
 
@@ -43,7 +43,7 @@ class PlotterTest < Minitest::Test
   end
 
   def test_plot_granchild
-    granchild = { label: 'Granchild label', children: [] }
+    granchild = { label: 'Granchild label' }
     tree = {
       label: 'Parent label',
       children: [{ label: 'Child label', children: [granchild] }]
@@ -59,9 +59,9 @@ class PlotterTest < Minitest::Test
 
   def test_plot_multiple_granchildren
     granchildren = [
-      { label: 'Granchild label 1', children: [] },
-      { label: 'Granchild label 2', children: [] },
-      { label: 'Granchild label 3', children: [] }
+      { label: 'Granchild label 1' },
+      { label: 'Granchild label 2' },
+      { label: 'Granchild label 3' }
     ]
     tree = {
       label: 'Parent label',
@@ -80,9 +80,9 @@ class PlotterTest < Minitest::Test
 
   def test_plot_multiple_children_and_granchildren
     granchildren = [
-      { label: 'Granchild label 1', children: [] },
-      { label: 'Granchild label 2', children: [] },
-      { label: 'Granchild label 3', children: [] }
+      { label: 'Granchild label 1' },
+      { label: 'Granchild label 2' },
+      { label: 'Granchild label 3' }
     ]
     tree = {
       label: 'Parent label',
@@ -108,13 +108,13 @@ class PlotterTest < Minitest::Test
 
   def test_plot_connection_line_for_granchildren_when_last_child
     grangranchildren = [
-      { label: 'Grangranchild label 1', children: [] },
-      { label: 'Grangranchild label 2', children: [] }
+      { label: 'Grangranchild label 1' },
+      { label: 'Grangranchild label 2' }
     ]
     granchildren = [
       { label: 'Granchild label 1', children: grangranchildren },
-      { label: 'Granchild label 2', children: [] },
-      { label: 'Granchild label 3', children: [] }
+      { label: 'Granchild label 2' },
+      { label: 'Granchild label 3' }
     ]
     tree = {
       label: 'Parent label',
