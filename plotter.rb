@@ -11,14 +11,15 @@ module Plotter
     tree
   end
 
-  def plot_children(item, tree, level = 0, indentation_base = '│  ')
+  def plot_children(item, tree, level = 0, parent_last = false)
+    indentation_base = parent_last ? '   ' : '│  '
+    indentation = indentation_base * level
+
     item.children.each_flag_last do |child, last|
       bullet = last ? '└─ ' : '├─ '
-      indentation = indentation_base * level
       tree << plot_item(child.label, bullet, indentation)
 
-      indentation_base = '   ' if level.zero? && last
-      plot_children(child, tree, level + 1, indentation_base)
+      plot_children(child, tree, level + 1, last)
     end
   end
 
