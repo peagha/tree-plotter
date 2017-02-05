@@ -44,6 +44,5 @@ ruby plotter_test.rb
 ```
 
 ## TODO:
-* Allow 'chilren' node to have `nil` value
 * Add documentation
 * Improve class / module names (`Plotter` is too generic)
