@@ -1,4 +1,4 @@
-# fronzen_string_literals: true
+# frozen_string_literal: true
 
 require 'minitest/autorun'
 require_relative 'plotter'
