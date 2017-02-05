@@ -94,4 +94,32 @@ class PlotterTest < Minitest::Test
     TREE
     assert_equal plot_result, Plotter.plot_tree(parent)
   end
+
+  def test_plot_connection_line_for_granchildren_when_last_child
+    grangranchild1 = Plottable.new('Grangranchild label 1')
+    grangranchild2 = Plottable.new('Grangranchild label 2')
+    granchild1 = Plottable.new('Granchild label 1', [grangranchild1, grangranchild2])
+    granchild2 = Plottable.new('Granchild label 2')
+    granchild3 = Plottable.new('Granchild label 3')
+    child1 = Plottable.new('Child label 1', [granchild1, granchild2, granchild3])
+    child2 = Plottable.new('Child label 2', [granchild1, granchild2, granchild3])
+    parent = Plottable.new('Parent label', [child1, child2])
+
+    plot_result = <<~TREE
+      Parent label
+      ├─ Child label 1
+      │  ├─ Granchild label 1
+      │  │  ├─ Grangranchild label 1
+      │  │  └─ Grangranchild label 2
+      │  ├─ Granchild label 2
+      │  └─ Granchild label 3
+      └─ Child label 2
+         ├─ Granchild label 1
+         │  ├─ Grangranchild label 1
+         │  └─ Grangranchild label 2
+         ├─ Granchild label 2
+         └─ Granchild label 3
+    TREE
+    assert_equal plot_result, Plotter.plot_tree(parent)
+  end
 end
