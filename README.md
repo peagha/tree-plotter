@@ -1,6 +1,6 @@
-# Plotter
+# Tree Plotter
 
-This is a simple ruby algorithm that plots a tree based in a Hash.
+This is a simple Ruby algorithm that plots a tree based in a Hash.
 
 Example:
 ```ruby
